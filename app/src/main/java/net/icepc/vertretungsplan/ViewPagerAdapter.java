@@ -13,7 +13,15 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public Fragment getItem(int num) {
-        return new FragmentText();
+        switch (num){
+            case 0:
+                return new todayFragment();
+            case 1:
+                return new tomorrowFragment();
+            case 2:
+                return new infoFragment();
+            }
+        return null;
     }
 
     @Override
