@@ -3,6 +3,8 @@ package net.icepc.vertretungsplan;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -24,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
         SlidingTabLayout tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true);
 
+
         pager = (ViewPager) this.findViewById(R.id.viewpager);
 
         // init view pager
@@ -42,4 +45,11 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }

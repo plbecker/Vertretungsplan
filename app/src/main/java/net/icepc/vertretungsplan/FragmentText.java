@@ -1,5 +1,6 @@
 package net.icepc.vertretungsplan;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ public class FragmentText extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         TextView text = new TextView(getActivity().getApplicationContext());
         text.setText("Fragment content");
+        text.setTextColor(Color.BLACK);
         text.setGravity(Gravity.CENTER);
 
         return text;
