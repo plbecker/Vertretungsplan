@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -35,6 +36,8 @@ public class todayFragment extends Fragment implements View.OnClickListener {
     public ArrayList<replacementData> data = new ArrayList<replacementData>();
     public String URL = "http://www.aesmtk.de/cms/stundenplan/schueler/subst_00";
     ArrayList<replacementData> testData = new ArrayList<replacementData>();
+
+    private AsyncTask<String, Void, Boolean> asyncTask;
 
     public todayFragment() {
         // Required empty public constructor
@@ -68,7 +71,7 @@ public class todayFragment extends Fragment implements View.OnClickListener {
         testData.add(new replacementData(4, "7.", "MEI", "SJ", "", "Deutsch", "54", true));
         */
 
-        new AsyncTask<String, Void, Boolean>() {
+        asyncTask = new AsyncTask<String, Void, Boolean>() {
             @Override
             protected Boolean doInBackground(String... params) {
                 boolean result = false;
@@ -128,10 +131,16 @@ public class todayFragment extends Fragment implements View.OnClickListener {
             }
 
             Elements td = element.select("td");
-            boolean canceled = false;
+            int canceled = 0;
 
             if (td.get(3).text().equals("---") || td.get(3).text().equals("+")){
-                canceled = true;
+                canceled = 1;
+            }
+            else if (!StringUtil.isBlank(td.get(2).text())){
+                canceled = 0;
+            }
+            else {
+                canceled = 2;
             }
 
             data.add(new replacementData(td.get(2).text(),td.get(3).text(),td.get(4).text(),td.get(7).text(), td.get(8).text(), td.get(5).text(), td.get(10).text(), canceled ));
@@ -162,8 +171,6 @@ public class todayFragment extends Fragment implements View.OnClickListener {
 
             //new replacementData(td.get(index++).text(),td.get(index++).text(),td.get(index++).text());
 
-
-
             // Here you can do something with each element
             //Log.d("",element.text());
         }
@@ -182,7 +189,7 @@ public class todayFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.floatingActionButton:
-                getData();
+                //getData();
 
         }
 

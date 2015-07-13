@@ -2,6 +2,7 @@ package net.icepc.vertretungsplan;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,20 +39,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // example:
         // customViewHolder.textView.setText("");
 
+        String courses = data.get(position).course;
+
+        if (courses.length() > 20){
+            courses = courses.charAt(1)+"A-F";
+        }
+        /*for (int i = 5; i<9; i++) {
+            if (courses.equals("0"+i+"A,0"+i+"B,0"+i+"C,0"+i+"D,0"+i+"E,0"+i+"F")){
+                Log.d(courses, "HERE");
+                courses = "0"+i+"A-F";
+            }
+        }*/
+
         holder.time.setText(data.get(position).hour+".Std");
-        holder.course.setText(data.get(position).course);
+        holder.course.setText(courses);
         holder.originalRoom.setText(data.get(position).originalRoom);
         holder.replacementRoom.setText(data.get(position).replacementRoom);
         holder.teacher.setText(data.get(position).teacher);
         holder.subject.setText(data.get(position).subject);
 
-        if (data.get(position).canceled == true){
+        if (data.get(position).canceled == 1){
             holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.accentColor2));
             holder.canceledText.setText("E");
         }
-        else {
-            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.primaryColorDark));
+        else if (data.get(position).canceled == 0){
+            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.secondaryColorDark));
             holder.canceledText.setText("V");
+        }
+        else if (data.get(position).canceled == 2){
+            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.special));
+            holder.canceledText.setText("S");
         }
 
     }

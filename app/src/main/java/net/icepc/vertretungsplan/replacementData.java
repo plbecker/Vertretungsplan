@@ -10,9 +10,9 @@ public class replacementData {
     public String replacementRoom;
     public String additionalInfo;
     public String subject;
-    public boolean canceled;
+    public int canceled;
 
-    public replacementData(String course, String teacher, String hour, String replacementRoom, String originalRoom, String subject, String additionalInfo, boolean canceled) {
+    public replacementData(String course, String teacher, String hour, String replacementRoom, String originalRoom, String subject, String additionalInfo, int canceled) {
         this.hour = hour;
         this.course = course;
         this.teacher = teacher;
