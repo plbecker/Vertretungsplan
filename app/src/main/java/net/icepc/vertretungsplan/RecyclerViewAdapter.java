@@ -39,6 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // customViewHolder.textView.setText("");
 
         holder.time.setText(Integer.toString(data.get(position).hour)+".Std");
+        holder.course.setText(data.get(position).course);
         holder.originalTeacher.setText(data.get(position).originalTeacher);
         holder.replacementTeacher.setText(data.get(position).replacementTeacher);
         holder.subject.setText(data.get(position).subject);
@@ -63,6 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         protected TextView time;
+        protected TextView course;
         protected TextView originalTeacher;
         protected TextView replacementTeacher;
         protected TextView additionalInfo;
@@ -74,6 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         public CustomViewHolder(View itemView) {
             super(itemView);
             this.time = (TextView) itemView.findViewById(R.id.time);
+            this.course = (TextView) itemView.findViewById(R.id.course);
             this.originalTeacher = (TextView) itemView.findViewById(R.id.originalTeacher);
             this.replacementTeacher = (TextView) itemView.findViewById(R.id.replacementTeacher);
             this.subject = (TextView) itemView.findViewById(R.id.subject);
