@@ -45,10 +45,10 @@
                 android:layout_gravity="left">
 
                 <TextView
-                    android:id="@+id/originalTeacher"
+                    android:id="@+id/originalRoom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LEHRER 1" />
+                    android:text="RAUM 1" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -59,11 +59,11 @@
                     android:src="@drawable/ic_arrow_forward_black_24dp" />
 
                 <TextView
-                    android:id="@+id/replacementTeacher"
+                    android:id="@+id/replacementRoom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="LEHRER 2" />
+                    android:text="RAUM 2" />
 
             </LinearLayout>
             <TextView
@@ -81,18 +81,18 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/subject"
+                android:id="@+id/teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="SUBJECT" />
+                android:text="TEACHER" />
 
             <TextView
-                android:id="@+id/newRoom"
+                android:id="@+id/subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="ROOM" />
+                android:text="FACH" />
 
             <TextView
                 android:id="@+id/time"

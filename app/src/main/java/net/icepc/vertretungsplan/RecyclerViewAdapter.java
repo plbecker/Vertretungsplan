@@ -38,12 +38,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         // example:
         // customViewHolder.textView.setText("");
 
-        holder.time.setText(Integer.toString(data.get(position).hour)+".Std");
+        holder.time.setText(data.get(position).hour+".Std");
         holder.course.setText(data.get(position).course);
-        holder.originalTeacher.setText(data.get(position).originalTeacher);
-        holder.replacementTeacher.setText(data.get(position).replacementTeacher);
+        holder.originalRoom.setText(data.get(position).originalRoom);
+        holder.replacementRoom.setText(data.get(position).replacementRoom);
+        holder.teacher.setText(data.get(position).teacher);
         holder.subject.setText(data.get(position).subject);
-        holder.newRoom.setText(data.get(position).newRoom);
 
         if (data.get(position).canceled == true){
             holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.accentColor2));
@@ -65,11 +65,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         protected TextView time;
         protected TextView course;
-        protected TextView originalTeacher;
-        protected TextView replacementTeacher;
-        protected TextView additionalInfo;
+        protected TextView originalRoom;
+        protected TextView replacementRoom;
+        protected TextView teacher;
         protected TextView subject;
-        protected TextView newRoom;
         protected ImageView canceled;
         protected TextView canceledText;
 
@@ -77,12 +76,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             this.time = (TextView) itemView.findViewById(R.id.time);
             this.course = (TextView) itemView.findViewById(R.id.course);
-            this.originalTeacher = (TextView) itemView.findViewById(R.id.originalTeacher);
-            this.replacementTeacher = (TextView) itemView.findViewById(R.id.replacementTeacher);
+            this.originalRoom = (TextView) itemView.findViewById(R.id.originalRoom);
+            this.replacementRoom = (TextView) itemView.findViewById(R.id.replacementRoom);
             this.subject = (TextView) itemView.findViewById(R.id.subject);
-            this.newRoom = (TextView) itemView.findViewById(R.id.newRoom);
             this.canceled = (ImageView) itemView.findViewById(R.id.canceled);
             this.canceledText = (TextView) itemView.findViewById(R.id.canceledText);
+            this.teacher = (TextView) itemView.findViewById(R.id.teacher);
 
         }
     }

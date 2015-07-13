@@ -3,23 +3,23 @@ package net.icepc.vertretungsplan;
 
 public class replacementData {
 
-    public int hour;
+    public String hour;
     public String course;
-    public String originalTeacher;
-    public String replacementTeacher;
+    public String teacher;
+    public String originalRoom;
+    public String replacementRoom;
     public String additionalInfo;
     public String subject;
-    public String newRoom;
     public boolean canceled;
 
-    public replacementData(int hour, String course, String originalTeacher, String replacementTeacher, String additionalInfo, String subject, String newRoom, boolean canceled) {
+    public replacementData(String course, String teacher, String hour, String replacementRoom, String originalRoom, String subject, String additionalInfo, boolean canceled) {
         this.hour = hour;
         this.course = course;
-        this.originalTeacher = originalTeacher;
-        this.replacementTeacher = replacementTeacher;
+        this.teacher = teacher;
         this.additionalInfo = additionalInfo;
+        this.originalRoom = originalRoom;
+        this.replacementRoom = replacementRoom;
         this.subject = subject;
-        this.newRoom = newRoom;
         this.canceled = canceled;
     }
 }
