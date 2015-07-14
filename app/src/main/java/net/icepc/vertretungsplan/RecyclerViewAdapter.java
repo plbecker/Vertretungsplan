@@ -59,11 +59,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.subject.setText(data.get(position).subject);
 
         if (data.get(position).canceled == 1){
-            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.accentColor2));
+            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.accentColor));
             holder.canceledText.setText("E");
         }
         else if (data.get(position).canceled == 0){
-            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.secondaryColorDark));
+            holder.canceled.setBackgroundColor(v.getContext().getResources().getColor(R.color.secondaryColor));
             holder.canceledText.setText("V");
         }
         else if (data.get(position).canceled == 2){

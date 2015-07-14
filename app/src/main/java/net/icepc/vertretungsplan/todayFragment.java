@@ -22,6 +22,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 /**
@@ -36,8 +37,6 @@ public class todayFragment extends Fragment implements View.OnClickListener {
     public ArrayList<replacementData> data = new ArrayList<replacementData>();
     public String URL = "http://www.aesmtk.de/cms/stundenplan/schueler/subst_00";
     ArrayList<replacementData> testData = new ArrayList<replacementData>();
-
-    private AsyncTask<String, Void, Boolean> asyncTask;
 
     public todayFragment() {
         // Required empty public constructor
@@ -71,37 +70,8 @@ public class todayFragment extends Fragment implements View.OnClickListener {
         testData.add(new replacementData(4, "7.", "MEI", "SJ", "", "Deutsch", "54", true));
         */
 
-        asyncTask = new AsyncTask<String, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(String... params) {
-                boolean result = false;
-                //getData();
-                // Connect to website
-                for (int i = 1; i < 9; i++) {
-                    try {
-                        Document doc = Jsoup.connect(URL + i + ".html").get();
-                        parseServerData(doc);
-                        result = true;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return result;
-            }
-
-
-            @Override
-            protected void onPostExecute(Boolean aBoolean) {
-                if (aBoolean = true) {
-                    recyclerViewAdapter = new RecyclerViewAdapter(data);
-                    recyclerView.setAdapter(recyclerViewAdapter);
-                } else {
-                    Toast.makeText(getActivity(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
-                }
-                super.onPostExecute(aBoolean);
-            }
-        }.execute();
-
+        CustomAsyncTask customAsyncTask = new CustomAsyncTask();
+        customAsyncTask.execute();
 
         return viewRoot;
     }
@@ -111,6 +81,14 @@ public class todayFragment extends Fragment implements View.OnClickListener {
         Integer first = 0;
         Integer limit = 3;
 
+        Calendar calendar = Calendar.getInstance();
+        int day_index = calendar.get(Calendar.DAY_OF_MONTH);
+
+        //Log.d("Day_Index",day_index+"");
+
+        String[] daysOfWeek = {"","So","Mo","Di","Mi","Do","Fr","Sa"};
+
+        //Log.d("Today it's ",daysOfWeek[day_index]+"");
 
         for (Element element : document.select("tr")) {
             if (first < limit) {
@@ -143,7 +121,11 @@ public class todayFragment extends Fragment implements View.OnClickListener {
                 canceled = 2;
             }
 
-            data.add(new replacementData(td.get(2).text(),td.get(3).text(),td.get(4).text(),td.get(7).text(), td.get(8).text(), td.get(5).text(), td.get(10).text(), canceled ));
+            if ((Integer.toString(day_index).charAt(0)+Integer.toString(day_index).charAt(1)) == (td.get(1).text().charAt(0) + td.get(1).text().charAt(1)))
+            {
+
+                data.add(new replacementData(td.get(2).text(), td.get(3).text(), td.get(4).text(), td.get(7).text(), td.get(8).text(), td.get(5).text(), td.get(10).text(), canceled));
+            }
             // DATUM
             //Log.d(td.get(1).text()+"","");
 
@@ -189,10 +171,43 @@ public class todayFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.floatingActionButton:
-                //getData();
+                new CustomAsyncTask().execute();
+                Toast.makeText(getActivity(), "Daten werden neu geladen...",Toast.LENGTH_LONG).show();
 
         }
 
 
     }
+
+    public class CustomAsyncTask extends AsyncTask<String, Void, Boolean>{
+        @Override
+        protected Boolean doInBackground(String... params) {
+            boolean result = false;
+            //getData();
+            // Connect to website
+            for (int i = 1; i < 9; i++) {
+                try {
+                    Document doc = Jsoup.connect(URL + i + ".html").get();
+                    parseServerData(doc);
+                    result = true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return result;
+        }
+
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean = true) {
+                recyclerViewAdapter = new RecyclerViewAdapter(data);
+                recyclerView.setAdapter(recyclerViewAdapter);
+            } else {
+                Toast.makeText(getActivity(), "Failed to fetch data!", Toast.LENGTH_SHORT).show();
+            }
+            super.onPostExecute(aBoolean);
+        }
+    }
+
 }
