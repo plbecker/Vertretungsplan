@@ -51,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         }*/
 
+        Log.d(Integer.toString(data.get(position).canceled),""+"___");
         holder.time.setText(data.get(position).hour+".Std");
         holder.course.setText(courses);
         holder.originalRoom.setText(data.get(position).originalRoom);

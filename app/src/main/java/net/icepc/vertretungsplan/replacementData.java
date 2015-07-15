@@ -1,6 +1,11 @@
 package net.icepc.vertretungsplan;
 
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class replacementData {
 
     public String hour;
@@ -21,5 +26,31 @@ public class replacementData {
         this.replacementRoom = replacementRoom;
         this.subject = subject;
         this.canceled = canceled;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        replacementData rD = (replacementData) o;
+        if (rD.replacementRoom.equals(replacementRoom) && rD.course.equals(course) && rD.teacher.equals(teacher) && rD.subject.equals(subject) && rD.originalRoom.equals(originalRoom) && rD.canceled == canceled && rD.hour.equals(hour) && rD.additionalInfo.equals(additionalInfo)) return true;
+        return false;
+    }
+
+    public String toString() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("hour", this.hour);
+            obj.put("course", this.course);
+            obj.put("teacher", this.teacher);
+            obj.put("originalRoom", this.originalRoom);
+            obj.put("replacementRoom", this.replacementRoom);
+            obj.put("additionalInfo", this.additionalInfo);
+            obj.put("subject", this.subject);
+            obj.put("canceled", this.canceled);
+            return obj.toString();
+        }
+        catch (JSONException j){
+            Log.d("JSON Exc ",j+"");
+            return null;
+        }
     }
 }
