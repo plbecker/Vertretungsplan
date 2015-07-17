@@ -50,6 +50,7 @@ public class todayFragment extends Fragment implements View.OnClickListener {
     public SharedPreferences myPrefs;
     public final Handler handler = new Handler();
     public Runnable runnable;
+    private boolean createNotification = false;
 
     public todayFragment() {
         // Required empty public constructor
@@ -98,7 +99,9 @@ public class todayFragment extends Fragment implements View.OnClickListener {
 
         //Log.d("Today it's ",daysOfWeek[day_index]+"");
 
-        for (Element element : document.select("tr")) {
+        for (int i = 0; i < document.select("tr").size(); i++) {
+            Element element = document.select("tr").get(i);
+
             if (first < limit) {
                 first++;
 
@@ -114,7 +117,6 @@ public class todayFragment extends Fragment implements View.OnClickListener {
                 }
                 continue;
             }
-
             Elements td = element.select("td");
             int canceled = 0;
 
@@ -137,36 +139,14 @@ public class todayFragment extends Fragment implements View.OnClickListener {
 
                 } else if (!data.contains(rData)) {
                     //Log.d("New Stuff!","");
-                    data.add(new replacementData(td.get(2).text(), td.get(3).text(), td.get(4).text(), td.get(7).text(), td.get(8).text(), td.get(5).text(), td.get(10).text(), canceled));
-
-                    // Make notification
-                    Intent notificationIntent = new Intent(getActivity(), MainActivity.class);
-                    PendingIntent contentIntent = PendingIntent.getActivity(getActivity(),
-                            123123, notificationIntent,
-                            PendingIntent.FLAG_CANCEL_CURRENT);
-
-                    NotificationManager nm = (NotificationManager) getActivity()
-                            .getSystemService(Context.NOTIFICATION_SERVICE);
-
-                    Resources res = getActivity().getResources();
-                    Notification.Builder builder = new Notification.Builder(getActivity());
-
-                    builder.setContentIntent(contentIntent)
-                            .setSmallIcon(R.mipmap.ic_launcher)
-                            .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
-                            .setTicker("Neue Vertretungen")
-                            .setWhen(System.currentTimeMillis())
-                            .setAutoCancel(true)
-                            .setContentTitle("Neue Vertretungen!");
+                    data.add(rData);
 
                     if (rData.canceled == 1) {
-                        builder.setContentText("Für " + td.get(2).text() + " entfällt am " + td.get(1).text() + " " + td.get(6).text() + " in der " + td.get(4).text() + ". Std.");
+                        createNotification = true;
                     }
 
 
-                    nm.notify(1, builder.getNotification());
-
-
+                    // Make notification
                     //Toast.makeText(getActivity(), "Neue Vertretungen!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -253,10 +233,32 @@ public class todayFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Boolean aBoolean) {
             if (aBoolean = true) {
                 SharedPreferences.Editor prefsEditor = myPrefs.edit();
-                prefsEditor.putInt("dataNumber", data.size());
-                prefsEditor.apply();
-                Log.d("Exists Number Prefs: " + myPrefs.getInt("dataNumber", 1), "Number of data: " + data.size());
+                //prefsEditor.putInt("dataNumber", data.size());
+                //prefsEditor.apply();
+                //Log.d("Exists Number Prefs: " + myPrefs.getInt("dataNumber", 1), "Number of data: " + data.size());
 
+                if (createNotification) {
+                    Intent notificationIntent = new Intent(getActivity(), MainActivity.class);
+                    PendingIntent contentIntent = PendingIntent.getActivity(getActivity(),
+                            123123, notificationIntent,
+                            PendingIntent.FLAG_CANCEL_CURRENT);
+
+                    NotificationManager nm = (NotificationManager) getActivity()
+                            .getSystemService(Context.NOTIFICATION_SERVICE);
+
+                    Resources res = getActivity().getResources();
+                    Notification.Builder builder = new Notification.Builder(getActivity());
+
+                    builder.setContentIntent(contentIntent)
+                            .setSmallIcon(R.drawable.ic_launcher)
+                            .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
+                            .setTicker("Neue Vertretungen")
+                            .setWhen(System.currentTimeMillis())
+                            .setAutoCancel(true)
+                            .setContentText("Plan wurde aktualisiert")
+                            .setContentTitle("Neue Vertretungen!");
+                    nm.notify(1, builder.getNotification());
+                }
                 //prefsEditor.commit();
                 // Check if Data differs
                 // If so, renew Data and make Notification
